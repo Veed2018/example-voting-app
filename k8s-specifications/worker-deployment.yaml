@@ -3,9 +3,18 @@ kind: Deployment
 metadata:
   labels:
     app: worker
+    namespace: instavote
   name: worker
 spec:
-  replicas: 1
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  revisionHistoryLimit: 4
+  paused: false
+  minReadySeconds: 20
   selector:
     matchLabels:
       app: worker

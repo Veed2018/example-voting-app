@@ -1,33 +1,49 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: db
-  name: db
+  name: postgresql-db
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
-      app: db
+      app: postgresql-db
   template:
     metadata:
       labels:
-        app: db
+        app: postgresql-db
     spec:
       containers:
-      - image: postgres:15-alpine
-        name: postgres
-        env:
-        - name: POSTGRES_USER
-          value: postgres
-        - name: POSTGRES_PASSWORD
-          value: postgres
-        ports:
-        - containerPort: 5432
-          name: postgres
-        volumeMounts:
-        - mountPath: /var/lib/postgresql/data
-          name: db-data
+        - name: postgresql-db
+          image: postgres:latest
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: db-envs
+                  key: user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-password
+                  key: dbpass
+            - name: PGDATA
+              valueFrom:
+                configMapKeyRef:
+                  name: db-envs
+                  key: pgdat
+          ports:
+            - containerPort: 5432
+              name: postgres
+          volumeMounts:
+            - name: db-data
+              mountPath: /data
+      ## VOLUME DEFINITION
       volumes:
-      - name: db-data
-        emptyDir: {} 
+        - name: db-data
+          persistentVolumeClaim:
+            claimName: db-data-disk
+        - name: db-envs
+          configMap:
+            name: db-envs

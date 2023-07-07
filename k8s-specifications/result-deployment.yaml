@@ -15,7 +15,7 @@ spec:
         app: result
     spec:
       containers:
-      - image: dockersamples/examplevotingapp_result
+      - image: veed/result:v2
         name: result
         ports:
         - containerPort: 80

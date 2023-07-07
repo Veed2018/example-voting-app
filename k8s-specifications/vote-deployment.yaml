@@ -1,22 +1,39 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: vote
-  name: vote
+  name: vote-deploy
 spec:
-  replicas: 1
+  ## Update Strategy
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  revisionHistoryLimit: 4
+  paused: false
+  minReadySeconds: 20
+  ## END Update stragety
+  ## Replica Set controller
+  replicas: 3
   selector:
     matchLabels:
       app: vote
+    matchExpressions:
+      - { key: version,operator: In, values: [v1,v2,v3,v4] }
+  ## End Replica set
+  ## Pod Controller
   template:
     metadata:
+      namespace: instavote
       labels:
         app: vote
+        version: v3
     spec:
       containers:
-      - image: dockersamples/examplevotingapp_vote
-        name: vote
-        ports:
-        - containerPort: 80
-          name: vote
+        - name: app
+          image: veed/vote:v3
+          ports:
+          # INFO PURPUSES
+            - containerPort: 80
+              protocol: TCP
+  ## End Pod Controller

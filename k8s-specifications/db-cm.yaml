@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db-envs
+data:
+  user: "postgres"
+  pgdat: "/data/pgdata"

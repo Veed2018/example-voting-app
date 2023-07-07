@@ -6,8 +6,9 @@ import random
 import json
 import logging
 
-option_a = os.getenv('OPTION_A', "Cats")
-option_b = os.getenv('OPTION_B', "Dogs")
+option_a = os.getenv('OPTION_A', "Nike")
+option_b = os.getenv('OPTION_B', "Addidas")
+redis_srv = os.getenv('REDIS_SRV', "redis")
 hostname = socket.gethostname()
 
 app = Flask(__name__)
@@ -17,8 +18,8 @@ app.logger.handlers.extend(gunicorn_error_logger.handlers)
 app.logger.setLevel(logging.INFO)
 
 def get_redis():
-    if not hasattr(g, 'redis'):
-        g.redis = Redis(host="redis", db=0, socket_timeout=5)
+    if not hasattr(g, redis_srv):
+        g.redis = Redis(host=redis_srv, db=0, socket_timeout=5)
     return g.redis
 
 @app.route("/", methods=['POST','GET'])
