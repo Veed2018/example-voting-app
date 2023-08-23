@@ -17,5 +17,5 @@ pool:
     backendAzureRmStorageAccountName: 'tfstate_voteApp'
     backendAzureRmStorageAccountSku: 'Standard_LRS'
     backendAzureRmContainerName: 'tfstate'
-    backendAzureRmKey: 'terraform-voteApp-dev.tfstate'
+    backendAzureRmKey: 'dev-terraform-voteApp.tfstate'
     allowTelemetryCollection: false
