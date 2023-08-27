@@ -1,3 +1,9 @@
+variable "location" {
+  description = "What region we are creating the resources in"
+  type = string
+  default = "northeurope"
+}
+
 variable "client_id" {
   description = "Service Principal Name"
   type = string
