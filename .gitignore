@@ -4,3 +4,8 @@ bin/
 obj/
 .vs/
 node_modules/
+*/terraform.tfvars
+**/terraform-provider-*
+**/.terraform
+**/.terraform.lock.hcl
+**/sensitive-terraform.tfvars
