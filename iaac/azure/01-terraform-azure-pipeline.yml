@@ -55,3 +55,5 @@ stages:
           command: plan
           workingDirectory: $(tf_wkdir)
           environmentServiceName: $(serviceConnection)
+          allowTelemetryCollection: false
+          publishPlanResults: 'PlanResults'
