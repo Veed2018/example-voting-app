@@ -10,7 +10,7 @@ trigger:
     - 'iaac/azure/*'
 
 variables:
-  serviceConnection: 'VoteApp_ARM'
+  serviceConnection: 'VotingApp_SC'
   # Terraform backend settings (only secret, the other in provider.tf)
   tf_state_scrt: $ # Terrafom Secret
   # Terraform settings
@@ -42,7 +42,10 @@ stages:
         inputs:
           command: init
           workingDirectory: $(tf_wkdir)
-          backendServiceArm: $(serviceConnection)
+          backendType: 'azurerm'
+          backendServiceArm: 'VotingApp_SC'
+          backendAzureRmSubscriptionId: '58748300-daee-4162-a4a4-bc9d55d91416'
+          allowTelemetryCollection: false
       # Step 4: run Terraform validate to validate HCL syntax
       - task: TerraformCLI@0
         displayName: 'Run terraform validate'
