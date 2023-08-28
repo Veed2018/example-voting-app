@@ -10,7 +10,7 @@ trigger:
     - 'iaac/azure/*'
 
 variables:
-  serviceConnection: 'VoteApp ARM'
+  serviceConnection: 'VoteApp_ARM'
   # Terraform backend settings (only secret, the other in provider.tf)
   tf_state_scrt: $ # Terrafom Secret
   # Terraform settings
