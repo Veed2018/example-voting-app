@@ -18,7 +18,4 @@ provider "azurerm" {
 
   subscription_id = "58748300-daee-4162-a4a4-bc9d55d91416"
   tenant_id = "6a409da8-6347-46b7-8118-45b7a5620dab"
-  # Service Principal Vars used for AKS deployment
-  client_id = var.client_id
-  client_secret = var.client_secret
 }
