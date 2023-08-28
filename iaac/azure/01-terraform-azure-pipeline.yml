@@ -61,3 +61,11 @@ stages:
           environmentServiceName: $(serviceConnection)
           allowTelemetryCollection: false
           publishPlanResults: 'PlanResults'
+      - task: TerraformCLI@0
+        inputs:
+          command: 'forceunlock'
+          workingDirectory: '$(tf_wkdir)'
+          allowTelemetryCollection: false
+          lockID: 'eyJJRCI6IjczNzk3MjExLTg1YjItNzA1ZS1kZjk3LWFmYzA3NTZhODU0YiIsIk9wZXJhdGlvbiI6Ik9wZXJhdGlvblR5cGVQbGFuIiwiSW5mbyI6IiIsIldobyI6InZzdHNAZnYtYXo2MzItMjc0IiwiVmVyc2lvbiI6IjEuNS42IiwiQ3JlYXRlZCI6IjIwMjMtMDgtMjhUMTM6MzA6MzguMTk4NDc1NjQ4WiIsIlBhdGgiOiJ0ZnN0YXRlL2Rldi50ZXJyYWZvcm0udHN0YXRlIn0='
+        condition: canceled()
+      
