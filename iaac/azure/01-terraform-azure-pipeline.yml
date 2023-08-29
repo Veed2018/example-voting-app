@@ -46,7 +46,6 @@ stages:
           backendServiceArm: 'VotingApp_SC'
           backendAzureRmSubscriptionId: '58748300-daee-4162-a4a4-bc9d55d91416'
           allowTelemetryCollection: false
-      - bash: "env"
       # Step 4: run Terraform validate to validate HCL syntax
       - task: TerraformCLI@0
         displayName: 'Run terraform validate'
@@ -60,6 +59,7 @@ stages:
           command: plan
           workingDirectory: $(tf_wkdir)
           environmentServiceName: $(serviceConnection)
+          commandOptions: "-out=$(tf_wkdir)/terraform.tfplan -var aks_client_id=$(aks_client_id) -var aks_client_secret=$(aks_client_secret) -detailed-exitcode"
           allowTelemetryCollection: false
           publishPlanResults: 'PlanResults'
       - task: AzureCLI@2
