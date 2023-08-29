@@ -4,14 +4,14 @@ variable "location" {
   default = "northeurope"
 }
 
-variable "client_id" {
-  description = "Service Principal Name"
+variable "aks_client_id" {
+  description = "Service Principal Name for AKS Cluster"
   type = string
   sensitive = true
 }
 
-variable "client_secret" {
-  description = "Service Principal secret"
+variable "aks_client_secret" {
+  description = "Service Principal secret for AKS cluster"
   type = string
   sensitive = true
 }
