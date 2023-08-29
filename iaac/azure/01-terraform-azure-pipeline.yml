@@ -68,4 +68,4 @@ stages:
           scriptType: 'bash'
           scriptLocation: 'inlineScript'
           inlineScript: 'az storage blob lease break --account-name "tfstate21752" --blob-name "dev.terraform.tstate" --container-name "tfstate" --account-key $(ARM_ACCESS_KEY)'
-        condition: canceled()
+        condition: or(canceled(),failed())
