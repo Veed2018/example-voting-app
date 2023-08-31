@@ -11,8 +11,6 @@ trigger:
 
 variables:
   serviceConnection: 'VotingApp_SC'
-  # Terraform backend settings (only secret, the other in provider.tf)
-  tf_state_scrt: $ # Terrafom Secret
   # Terraform settings
   tf_wkdir: '$(System.DefaultWorkingDirectory)/iaac/azure'
   tf_version: '1.5.6'
@@ -62,7 +60,9 @@ stages:
           commandOptions: "-out=$(tf_wkdir)/terraform.tfplan -var aks_client_id=$(aks_client_id) -var aks_client_secret=$(aks_client_secret) -detailed-exitcode"
           allowTelemetryCollection: false
           publishPlanResults: 'PlanResults'
+      # Step 6: Unlock Terraform tfstate file in case run fails
       - task: AzureCLI@2
+        displayName: 'Unlock Terraform state file'
         inputs:
           azureSubscription: 'VotingApp_SC'
           scriptType: 'bash'
