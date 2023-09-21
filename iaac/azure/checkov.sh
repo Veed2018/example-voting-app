@@ -22,7 +22,7 @@ WORK_DIR=${1-$(pwd)}
 #######################################
 run_checkov() {
   local test_dir=$1
-  docker run -t -v "${test_dir}":/tf bridgecrew/checkov -d /tf
+  docker run -t -v "${test_dir}":/tf bridgecrew/checkov -f /tf/terraform.tfplan
 }
 
 #######################################
