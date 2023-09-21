@@ -7,7 +7,7 @@
 #usage		       :./checkov.sh {WORKk_DIR}
 #bash_version    :5.0.16(1)-release 
 # 
-set -xeo pipefail
+set -eo pipefail
 
 # The target directory for scanning.
 WORK_DIR=${1-$(pwd)}
@@ -22,7 +22,7 @@ WORK_DIR=${1-$(pwd)}
 #######################################
 run_checkov() {
   local test_dir=$1
-  docker run -t -v "${test_dir}":/tf bridgecrew/checkov:latest -d /tf
+  docker run -t -v "${test_dir}":/tf bridgecrew/checkov -d /tf
 }
 
 #######################################
