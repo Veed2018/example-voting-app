@@ -60,7 +60,26 @@ stages:
           commandOptions: "-out=$(tf_wkdir)/terraform.tfplan -var aks_client_id=$(aks_client_id) -var aks_client_secret=$(aks_client_secret) -detailed-exitcode"
           allowTelemetryCollection: false
           publishPlanResults: 'PlanResults'
-      # Step 6: Unlock Terraform tfstate file in case run fails
+      # Step 6: manual validation for Terraform apply
+      - task: ManualValidation@0
+        condition: |
+          and
+            (
+              succeeded(),
+              eq(variables['TERRAFORM_PLAN_HAS_CHANGES'],'true')
+            )
+        inputs:
+          notifyUsers: 'veicheleduard@yahoo.com'
+          instructions: 'Please validate the Terraform apply task'
+      # Step 7: run Terraform apply
+      - task: TerraformCLI@0
+        inputs:
+          command: 'apply'
+          workingDirectory: $(tf_wkdir)
+          environmentServiceName: $(serviceConnection)
+          commandOptions: "-var aks_client_id=$(aks_client_id) -var aks_client_secret=$(aks_client_secret) $(tf_wkdir)/terraform.tfplan"
+          allowTelemetryCollection: false
+      # Step 8: Unlock Terraform tfstate file in case run fails
       - task: AzureCLI@2
         displayName: 'Unlock Terraform state file'
         inputs:
