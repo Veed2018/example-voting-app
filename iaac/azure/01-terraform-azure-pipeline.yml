@@ -62,6 +62,7 @@ stages:
           publishPlanResults: 'PlanResults'
       # Step 6: manual validation for Terraform apply
       - task: ManualValidation@0
+        pool: server
         condition: |
           and
             (
