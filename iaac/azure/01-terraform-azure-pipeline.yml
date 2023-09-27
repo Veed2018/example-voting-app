@@ -75,7 +75,7 @@ stages:
         displayName: 'Publish terrafom.plan as Artifact'
         inputs:
           PathtoPublish: $(Build.ArtifactStagingDirectory)
-          ArtifactName: terraform.tfplan
+          ArtifactName: 'terraform-manifests'
           publishLocation: Container
       # Step 7: Unlock Terraform tfstate file in case run fails
       - task: AzureCLI@2
