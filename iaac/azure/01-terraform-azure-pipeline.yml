@@ -60,7 +60,18 @@ stages:
           commandOptions: "-out=$(tf_wkdir)/terraform.tfplan -var aks_client_id=$(aks_client_id) -var aks_client_secret=$(aks_client_secret) -detailed-exitcode"
           allowTelemetryCollection: false
           publishPlanResults: 'PlanResults'
-      # Step 6: Unlock Terraform tfstate file in case run fails
+      # Step 6: Copy and publish artifact
+      - bash: echo Contents in System Default Working Directory; ls -R $(System.DefaultWorkingDirectory)
+      - bash: echo Content of the Build Artifact Directory; ls -R $(Build.ArtifactStagingDirectory)
+      - task: CopyFiles@2
+        displayName: 'Copy terraform.plan to Artifactory Dir'
+        inputs:
+          SourceFolder: $(tf_wkdir)
+          Contents: 'terraform.tfplan'
+          TargetFolder: $(Build.ArtifactStagingDirectory)
+          OverWrite: true
+      - bash: echo Content of the Build Artifact Directory; ls -R $(Build.ArtifactStagingDirectory)
+      # Step 7: Unlock Terraform tfstate file in case run fails
       - task: AzureCLI@2
         displayName: 'Unlock Terraform state file'
         inputs:
