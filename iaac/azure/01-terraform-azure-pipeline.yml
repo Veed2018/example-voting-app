@@ -67,7 +67,7 @@ stages:
         displayName: 'Copy terraform.plan to Artifactory Dir'
         inputs:
           SourceFolder: $(tf_wkdir)
-          Contents: 'terraform.tfplan'
+          Contents: '**'
           TargetFolder: $(Build.ArtifactStagingDirectory)
           OverWrite: true
       - bash: echo Content of the Build Artifact Directory; ls -R $(Build.ArtifactStagingDirectory)
