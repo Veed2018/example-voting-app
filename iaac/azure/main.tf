@@ -1,12 +1,14 @@
 locals {
   location = var.location
-  resource_group = azurerm_resource_group.rg-readit-dev-01.name 
+  resource_group = "dev-terraform" 
 }
 
-### Resource Group ###
-resource "azurerm_resource_group" "rg-readit-dev-01" {
-  name     = "rg-readit-dev-01"
-  location = local.location
+## VNet ##
+resource "azurerm_virtual_network" "vnet-front-dev-01" {
+  name                = "vnet-front-dev-01"
+  resource_group_name = local.resource_group
+  location            = local.location
+  address_space       = ["10.1.0.0/16"]
 
   tags = {
     env = "Dev"
